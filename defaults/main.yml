@@ -1,0 +1,7 @@
+---
+# defaults file for apigee-lvm-create-physical-volume
+partnum: 3
+typecode: 8E00
+device_name: xvda
+device_path: "/dev/{{ device_name }}"
+volume_name: vgroot

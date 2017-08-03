@@ -1,0 +1,17 @@
+---
+# tasks file for apigee-lvm-create-physical-volume
+
+- name: Install gdisk
+  yum:
+    name: gdisk
+    state: present
+
+- name: Create partition from available space
+  shell: "/usr/sbin/sgdisk --new {{ partnum }}:$(/usr/sbin/sgdisk -F):$(/usr/sbin/sgdisk -E) --mbrtogpt --typecode {{ partnum }}:{{ typecode }} --print {{ device_path }}"
+
+- name: Re-read partition table
+  shell: /usr/sbin/partprobe
+
+- name: Add physical volume to volume group
+  shell: "/usr/sbin/vgextend {{ volume_name }} {{ device_path }}{{ partnum }}"
+
